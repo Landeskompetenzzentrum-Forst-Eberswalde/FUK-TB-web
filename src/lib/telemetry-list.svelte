@@ -7,7 +7,7 @@
     async function _getTelemetry(){
         const startTs = new Date().getTime() - 1000 * 60 * 60 * 24 * 1000;
         const endTs = new Date().getTime();
-        console.log(startTs, endTs);
+
         try{
             const res = await api.getTelemetry(deviceId, startTs, endTs);
             console.log(res);

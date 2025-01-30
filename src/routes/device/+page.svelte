@@ -8,11 +8,17 @@
     import api from "$lib/api";
     import { page } from '$app/stores'
   import TelemetryList from "$lib/telemetry-list.svelte";
+  import { beforeUpdate } from "svelte";
   
   
     let topAppBar;
     let deviceId = $page.url.searchParams.get('deviceId');
     let deviceName = $page.url.searchParams.get('deviceName');
+
+    /*beforeUpdate(() => {
+        deviceId =  url.searchParams.get('deviceId');
+        deviceName = url.searchParams.get('deviceName');
+    });*/
 
     async function _getDevice(){
         try{
@@ -30,9 +36,10 @@
         window.history.back();
     }
     function _logout() {
-      localStorage.removeItem("credentials");
-      goto('/login');
-  }
+
+        localStorage.removeItem("credentials");
+        goto('/login');
+    }
   
   </script>
 
