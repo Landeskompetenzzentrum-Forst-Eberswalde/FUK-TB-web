@@ -30,7 +30,7 @@ jobs:
 
       - name: build
         env:
-          BASE_PATH: 'https://landeskompetenzzentrum-forst-eberswalde.github.io/FUK-TB-web'
+          BASE_PATH: '/FUK-TB-web'
         run: |
           npm run build
 
