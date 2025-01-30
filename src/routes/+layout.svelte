@@ -3,6 +3,7 @@
 	import '../app.scss';
   import { redirect } from '@sveltejs/kit';
   import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
 	let { children } = $props();
 
 	onMount(() => {
@@ -10,10 +11,10 @@
 		try{
 			const token = JSON.parse(credentials).token;
 			if (!token) {
-				goto('/login');
+				goto(`${base}/login`);
 			}
 		} catch (e) {
-			goto('/login');
+			goto(`${base}/login`);
 		}
 		
 	});

@@ -4,13 +4,14 @@
   import Button from "@smui/button";
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
   import IconButton from '@smui/icon-button';
+  import { base } from "$app/paths";
 
 
   let topAppBar;
 
   function _logout() {
       localStorage.removeItem("credentials");
-      goto('/login');
+      goto(`${base}/login`);
   }
 
 </script>

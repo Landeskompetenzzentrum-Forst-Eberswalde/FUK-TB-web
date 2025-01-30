@@ -9,6 +9,7 @@
     import { page } from '$app/stores'
   import TelemetryList from "$lib/telemetry-list.svelte";
   import { beforeUpdate } from "svelte";
+  import { base } from "$app/paths";
   
   
     let topAppBar;
@@ -38,7 +39,7 @@
     function _logout() {
 
         localStorage.removeItem("credentials");
-        goto('/login');
+        goto(`${base}/login`);
     }
   
   </script>
