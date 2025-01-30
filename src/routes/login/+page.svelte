@@ -25,10 +25,8 @@
         try{
             const res = await api.login(email, password);
             if(res.token){
-                localStorage.setItem("credentials", JSON.stringify(res));
                 goto(`${base}/`);
             }else{
-                console.log(res);
                 snackbarText = res.message;
                 snackbar.open()
             }
@@ -45,8 +43,8 @@
 
 <div class="h-screen flex items-center justify-center">
     <Content class="flex flex-col">
-        <Textfield variant="standard" bind:value={email} class="mb-4" input$autocomplete="email" type="email"></Textfield>
-        <Textfield bind:value={password} type="password" class="mb-4"></Textfield>
+        <Textfield variant="standard" bind:value={email} class="mb-4" input$autocomplete="email" type="email" label="E-Mail"></Textfield>
+        <Textfield bind:value={password} type="password" class="mb-4" label="Passwort"></Textfield>
         <Button onclick={_login} variant="raised" color="primary" disabled={loading}>
             {#if loading}
                 <Icon>

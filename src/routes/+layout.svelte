@@ -1,9 +1,11 @@
 <script>
-  import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import '../app.scss';
-  import { redirect } from '@sveltejs/kit';
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
+	import { redirect } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
+	import { pwaInfo } from 'virtual:pwa-info';
+
 	let { children } = $props();
 
 	onMount(() => {
@@ -18,6 +20,45 @@
 		}
 		
 	});
+
+	// https://vite-pwa-org.netlify.app/frameworks/sveltekit
+	let webManifestLink = $state('');
+	onMount(async () => {
+		if (pwaInfo) {
+			const { registerSW } = await import('virtual:pwa-register')
+			registerSW({
+				immediate: true,
+				onRegistered(r) {
+				// uncomment following code if you want check for updates
+				// r && setInterval(() => {
+				//    console.log('Checking for sw update')
+				//    r.update()
+				// }, 20000 /* 20s for testing purposes */)
+				console.log(`SW Registered: ${r}`)
+				},
+				onRegisterError(error) {
+				console.log('SW registration error', error)
+				}
+			})
+		}
+
+		currentSession.session = await db.authChange((event, session) => {
+			currentSession.session = session;
+			if (session) {
+				AuthenticationStore.user = session.user;
+			} else {
+				AuthenticationStore.user = null;
+			}
+		});
+	});
+
+	$effect(() => {
+		webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+	});
 </script>
+
+<svelte:head> 
+ 	{@html webManifestLink} 
+</svelte:head>
 
 {@render children()}

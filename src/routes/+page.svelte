@@ -8,6 +8,7 @@
 
 
   let topAppBar;
+  let _devicesList;
 
   function _logout() {
       localStorage.removeItem("credentials");
@@ -25,12 +26,16 @@
             <Title>Geräte</Title>
         </Section>
         <Section align="end" toolbar>
-            <IconButton onclick={_logout} icon="logout" label="Logout" class="material-icons">
-              logout
-            </IconButton>
+          <IconButton onclick={() => _devicesList.updateDevices()} icon="logout" label="Logout" class="material-icons">
+            update
+          </IconButton>
+          
+          <IconButton onclick={_logout} icon="logout" label="Logout" class="material-icons">
+            logout
+          </IconButton>
         </Section>
     </Row>
 </TopAppBar>
 <AutoAdjust {topAppBar}>
-  <DevicesList />
+  <DevicesList bind:this={_devicesList} />
 </AutoAdjust>
