@@ -12,6 +12,7 @@
     import api from '$lib/api';
     import { goto } from '$app/navigation';
     import Snackbar, { Label as SnackbarLabel } from '@smui/snackbar';
+  import { base } from '$app/paths';
 
     let email = $state(null);
     let password = $state(null);
@@ -25,7 +26,7 @@
             const res = await api.login(email, password);
             if(res.token){
                 localStorage.setItem("credentials", JSON.stringify(res));
-                goto('/');
+                goto(`${base}/`);
             }else{
                 console.log(res);
                 snackbarText = res.message;

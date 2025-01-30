@@ -1,5 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
   import api from "./api";
   import List, {
     Item,
@@ -29,7 +30,7 @@
 {:then devices} 
     <List>
         {#each devices as device}
-            <Item onSMUIAction={() => goto(`/device?deviceId=${device.id.id}&deviceName=${device.name}`)}>
+            <Item onSMUIAction={() => goto(`${base}/device?deviceId=${device.id.id}&deviceName=${device.name}`)}>
                 {device.name}
             </Item>
         {/each}
