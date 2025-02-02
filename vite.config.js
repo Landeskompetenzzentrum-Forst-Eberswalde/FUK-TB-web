@@ -10,7 +10,8 @@ export default defineConfig({
 			manifest: {
 				"theme_color": "#000000",
 				"background_color": "#000000",
-				"display": "standalone",
+				"display_override": ["fullscreen", "minimal-ui"],
+  				"display": "standalone",
 				"short_name": "FUK",
 				"description": "Manuelle Datenaufnahme forstlicher Umweltkontrollen",
 				"scope": "/FUK-TB-web/",
