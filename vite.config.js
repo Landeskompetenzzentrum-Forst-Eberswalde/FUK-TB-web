@@ -31,10 +31,10 @@ export default defineConfig({
 				],
 				"icons": [
 					{
-						"src": "favicon.svg",
-						"sizes": "512x512",
+						"src": "favicon.png",
+						"sizes": "667x667",
 						"purpose": "any",
-						"type": "image/svg+xml"
+						"type": "image/png"
 					}
 				]
 			}
