@@ -34,22 +34,22 @@
           <Title>Geräte</Title>
         </Section>
         <Section align="end" toolbar>
-          <Button onclick={() => _devicesList.updateDevices()} icon="logout" label="Logout">
+          <!--<Button onclick={() => _devicesList.updateDevices()} icon="logout" label="Logout">
             <Icon class="material-icons">refresh</Icon>
             <Label>Neu Laden</Label>
-          </Button>
+          </Button>-->
         </Section>
     </Row>
 </TopAppBar>
-<AutoAdjust {topAppBar}>
+<AutoAdjust {topAppBar} class="mx-auto max-w-xl">
   <SyncInfoCard />
   <DevicesList bind:this={_devicesList} />
 </AutoAdjust>
 
 <InfoDialog bind:isOpen={_infoOpen} title="Landesbetrieb Forst Brandenburg" text="Hier können Sie Ihre Geräte verwalten.">
   {#snippet children()}
-    <Button>
-      <Icon class="material-icons" onclick={_logout}>logout</Icon>
+    <Button onclick={_logout}>
+      <Icon class="material-icons">logout</Icon>
       <Label>Abmelden</Label>
     </Button>
   {/snippet}

@@ -3,6 +3,7 @@
     import Card, { ActionIcons, Actions, Content } from "@smui/card";
 
     import api from "$lib/api";
+  import OnlineOnly from "./online-only.svelte";
 
     let syncing = $state(false);
 
@@ -20,10 +21,10 @@
 
 
 {#if localQueueLength > 0}
-    <Card>
+    <Card class="my-2">
         <Content>
             <div>
-                {localQueueLength} Einträge noch nicht hochgeladen.
+                {localQueueLength} Einträge sind noch nicht hochgeladen.
             </div>
             <div>
 
@@ -31,10 +32,14 @@
         </Content>
         <Actions>
             <ActionIcons>
-                <Button variant="raised" onclick={_syncQueue}>
-                    <Icon class="material-icons">sync</Icon>
-                    <Label>Werte hochladen</Label>
-                </Button>
+                <OnlineOnly>
+                    {#snippet body(online)}
+                        <Button variant="raised" onclick={_syncQueue} disabled={!online}>
+                            <Icon class="material-icons">sync</Icon>
+                            <Label>Werte hochladen</Label>
+                        </Button>
+                    {/snippet}
+                </OnlineOnly>
             </ActionIcons>
         </Actions>
     </Card>

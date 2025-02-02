@@ -14,10 +14,8 @@
     });
 </script>
 
-{#if online}
-    {@render body()}
-{:else}
-    <div class="flex justify-center items-center h-full">
-        <h1 class="text-2xl">Brauche eine Internetverbindung!!</h1>
-    </div>
+{@render body(online)}
+{#if !online}
+    <br/>
+    <caption class="small">Brauche eine Internetverbindung!!</caption>
 {/if}

@@ -8,7 +8,7 @@
     import api from "./api";
   import { Subheader } from "@smui/list";
 
-    let { deviceId, key, queueLength = $bindable(), isDevelopment =false } = $props();
+    let { deviceId, key = $bindable(), queueLength = $bindable(), isDevelopment =false } = $props();
     let entryValue = $state(null);
     let entryKey = $state(null);
     let readOnly = $derived(key ? true : (!isDevelopment ? true : false));
@@ -16,8 +16,10 @@
     let existingKeys = $state([]);
 
     function _isValid(){
+        if(!entryKey || !entryValue) return true;
         let valid = true;
-        if(entryValue && entryKey && entryKey.length > 3 && entryValue.length > 0){
+        console.log(entryValue, entryKey, entryKey.length > 3, entryValue.length > 0);
+        if(entryValue && entryKey && entryKey.length > 3){
             valid = false;
         }
         return valid;
@@ -27,6 +29,7 @@
             await api.addKeyValueTolocalQueue(deviceId, entryKey, entryValue).finally(() => {
                 entryKey = null;
                 entryValue = null;
+                key = null;
             });
             
         } catch (e) {
@@ -54,7 +57,7 @@
                 </Textfield>
                 <div class="h-4"></div>
             {/if}
-            <Textfield label="Wert" bind:value={entryValue}>
+            <Textfield label="Wert" bind:value={entryValue} type={ !isDevelopment ? 'number' : 'text'} disabled={key ? false : true}>
                 {#snippet helper()}
                     <HelperText persistent>Wert in Zahlen</HelperText>
                 {/snippet}

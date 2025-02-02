@@ -51,5 +51,4 @@
 <svelte:head> 
  	{@html webManifestLink} 
 </svelte:head>
-
 {@render children()}
