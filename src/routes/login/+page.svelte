@@ -38,7 +38,6 @@
         } catch (e) {
             snackbarText = e;
             snackbar.open()
-            console.log(e);
         }
         loading = false;
     }

@@ -1,6 +1,6 @@
 <script>
     import { Subheader } from "@smui/list";
-import api from "./api";
+    import api from "./api";
     import Chip, { Set, Text } from "@smui/chips";
 
     let { deviceId, seletectedKey = $bindable() } = $props();
@@ -18,7 +18,7 @@ import api from "./api";
         }
     }
 </script>
-<Subheader>verfügbare Attribute</Subheader>
+<Subheader>1. Auswahl</Subheader>
 {#await api.getKeys(deviceId) then keys}
     <Set chips={keys} choice={true} bind:selected={seletectedKey}>
         {#snippet chip(chip)}

@@ -33,7 +33,6 @@
             const res = await api.getDeviceByName(deviceName);
             //const res = await api.getDevice(deviceId);
             device = res;
-            
             return res;
         } catch (e) {
             return e;
@@ -48,11 +47,12 @@
         goto(`${base}/login`);
     }
     function _syncQueue() {
-        syncing = true;
+        console.log('local sync off');
+        /*syncing = true;
         api.syncLocalQueue().finally(() => {
             syncing = false;
             localQueueLength = api.getLocalQueue().length;
-        });
+        });*/
     }
 
     onMount(() => {
@@ -85,7 +85,7 @@
                 {#if device}
                     <Text>
                         <PrimaryText>{deviceName}</PrimaryText>
-                        <SecondaryText>{deviceId}</SecondaryText>
+                        <SecondaryText>{device.additionalInfo.description}</SecondaryText>
                     </Text>
                 {/if}
                 
@@ -110,7 +110,7 @@
 
         {#if device.label.includes('manually')}
             <div class="h-4"></div>
-            <AddKeyValue deviceId={deviceId} bind:key={seletectedKey} bind:queueLength={localQueueLength} />
+            <AddKeyValue deviceId={deviceId} bind:key={seletectedKey} bind:queueLength={localQueueLength} isDevelopment={device.label.includes('development')} />
         {/if}
         <div class="h-4"></div>
         <TelemetryList deviceId={deviceId} key={seletectedKey} bind:queueLength={localQueueLength}  />

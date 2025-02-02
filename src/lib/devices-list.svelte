@@ -11,14 +11,21 @@
         Text,
         PrimaryText,
         SecondaryText,
+        Subheader,
+        Group,
+        Separator,
     } from '@smui/list';
     import { onMount } from "svelte";
+  import Card, { Content, PrimaryAction } from "@smui/card";
+  import { Icon } from "@smui/common";
 
     let activeFilter = $state([]);
     let filters = $state([]);
 
     let allDevices = $state([]);
     let filteredDevices = $derived(_filterDevices());
+
+    let grouped = $state({});
 
     function _filterDevices(){
         if(activeFilter.length === 0) return allDevices;
@@ -40,12 +47,22 @@
                 const words = device.label.split(' ').filter(n => n && n!='');
                 newFilters = [...newFilters, ...words];
             }
+
+            // Group res devices list by newFilters unique
+            grouped = res.reduce((acc, device) => {
+                const words = device.label.split(' ').filter(n => n && n!='');
+                let key = words.find(word => newFilters.includes(word));
+                if(!key) key = '';
+                if(!acc[key]) acc[key] = [];
+                acc[key].push(device);
+                return acc;
+            }, {});
+
             
             //remove duplicates
             filters = newFilters.filter((v, i, a) => a.indexOf(v) === i);
             
             allDevices = res;
-            console.log('refreshed');
         } catch (e) {
             console.log('error', e);
             return e;
@@ -59,7 +76,7 @@
     })
 
 </script>
-
+<!--
 <Set chips={filters} filter={true} bind:selected={activeFilter} >
     {#snippet chip(chip)}
       <Chip {chip} touch>
@@ -67,14 +84,55 @@
       </Chip>
     {/snippet}
 </Set>
+-->
 
-<List twoLine>
-    {#each filteredDevices as device}
-        <Item onSMUIAction={() => goto(`${base}/device?deviceId=${device.id.id}&deviceName=${device.name}`)}>
-            <Text>
-                <PrimaryText>{device.name}</PrimaryText>
-                <SecondaryText>{device.additionalInfo.description}</SecondaryText>
-            </Text>
-        </Item>
-    {/each}
-</List>
+
+<Subheader class="font-bold">Manuelle Eingabe (lesen und schreiben)</Subheader>
+{#each grouped['manually'] as device}
+    <Card class="m-2">
+        <PrimaryAction onclick={() => goto(`${base}/device?deviceId=${device.id.id}&deviceName=${device.name}`)}>
+            <Content>
+                <Text>
+                    <PrimaryText>{device.name}</PrimaryText>
+                    <SecondaryText>{device.additionalInfo.description}</SecondaryText>
+                </Text>
+            </Content>
+        </PrimaryAction>
+    </Card>
+{/each}
+
+<Group class="mt-9">
+    <List twoLine dense>
+        <Subheader class="font-bold">Andere (nur lesbar)</Subheader>
+        <Separator />
+        {#each grouped[''] as device}
+            <Item onSMUIAction={() => goto(`${base}/device?deviceId=${device.id.id}&deviceName=${device.name}`)}>
+                <Text>
+                    <PrimaryText>{device.name}</PrimaryText>
+                    <SecondaryText>{device.additionalInfo.description}</SecondaryText>
+                </Text>
+                <Meta>
+                    <Icon class="material-icons">visibility</Icon>
+                </Meta>
+            </Item>
+        {/each}
+    </List>
+</Group>
+
+<Group class="mt-4">
+    <List twoLine dense>
+        <Subheader class="font-bold">Entwickler Geräte</Subheader>
+        <Separator />
+        {#each grouped['development'] as device}
+            <Item onSMUIAction={() => goto(`${base}/device?deviceId=${device.id.id}&deviceName=${device.name}`)}>
+                <Text>
+                    <PrimaryText>{device.name}</PrimaryText>
+                    <SecondaryText>{device.additionalInfo.description}</SecondaryText>
+                </Text>
+                <Meta>
+                    <Icon class="material-icons">developer_mode</Icon>
+                </Meta>
+            </Item>
+        {/each}
+    </List>
+</Group>

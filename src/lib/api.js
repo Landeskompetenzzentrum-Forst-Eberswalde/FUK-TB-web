@@ -42,7 +42,6 @@ class API{
             if(!credentials.refreshToken){
                 reject('No refresh token');
             }
-            console.log(credentials, {refreshToken: credentials.refreshToken});
             fetch(`${host}auth/token`, {
                 method: 'POST',
                 headers: {
@@ -52,7 +51,6 @@ class API{
             }).then(response => {
                 if(response.ok){
                     response.json().then(data => {
-                        console.log('refreshToken', data);
                         //localStorage.setItem("credentials", JSON.stringify(data));
                         resolve(data);
                     });
@@ -78,7 +76,6 @@ class API{
                         resolve(data.data);
                     });
                 }else{
-                    console.log('response.statusText');
                     const _local = localStorage.getItem(requestUrl);
                     if(_local){
                         resolve(JSON.parse(_local));
@@ -87,7 +84,6 @@ class API{
                     }
                 }
             }).catch(e => {
-                console.log('catch');
                 const _local = localStorage.getItem(requestUrl);
                 if(_local){
                     resolve(JSON.parse(_local));
@@ -132,7 +128,7 @@ class API{
                     }
                 }
             }).catch(e => {
-                console.log('catch');
+               
                 const _local = localStorage.getItem(requestUrl);
                 if(_local){
                     resolve(JSON.parse(_local));
@@ -144,7 +140,8 @@ class API{
     }
     // http(s)://host:port/api/plugins/telemetry/{entityType}/{entityId}/keys/timeseries
     async getTelemetry(deviceId, startTs, endTs, key){
-        const requestUrl = `${host}plugins/telemetry/DEVICE/${deviceId}/values/timeseries?keys=${key}&startTs=${startTs}&endTs=${endTs}&limit=10`;
+        const requestUrl = `${host}plugins/telemetry/DEVICE/${deviceId}/values/timeseries?keys=${key}&startTs=${startTs}&endTs=${endTs}&limit=50`;
+        const saveUrl = `${host}plugins/telemetry/DEVICE/${deviceId}/values/timeseries?keys=${key}`;
         return new Promise((resolve, reject) => {
             fetch(requestUrl, {
                 headers: {
@@ -153,11 +150,11 @@ class API{
             }).then(response => {
                 if(response.ok){
                     response.json().then(data => {
-                        localStorage.setItem(requestUrl, JSON.stringify(data));
+                        localStorage.setItem(saveUrl, JSON.stringify(data));
                         resolve(data);
                     });
                 }else{
-                    const _local = localStorage.getItem(requestUrl);
+                    const _local = localStorage.getItem(saveUrl);
                     if(_local){
                         resolve(JSON.parse(_local));
                     }else{
@@ -165,7 +162,7 @@ class API{
                     }
                 }
             }).catch(e => {
-                const _local = localStorage.getItem(requestUrl);
+                const _local = localStorage.getItem(saveUrl);
                 if(_local){
                     resolve(JSON.parse(_local));
                 }else{
@@ -226,6 +223,13 @@ class API{
                         reject(response.statusText);
                     }
                 }
+            }).catch(e => {
+                const _local = localStorage.getItem(requestUrl);
+                if(_local){
+                    resolve(JSON.parse(_local));
+                }else{
+                    reject(e);
+                }
             });
         });
     }
@@ -259,6 +263,13 @@ class API{
                     }else{
                         reject(response.statusText);
                     }
+                }
+            }).catch(e => {
+                const _local = localStorage.getItem(requestUrl);
+                if(_local){
+                    resolve(JSON.parse(_local));
+                }else{
+                    reject(e);
                 }
             });
         });
@@ -360,7 +371,6 @@ class API{
             valueToBeAdded.values = {};
             valueToBeAdded.values[key] = value;
             
-            console.log(deviceId);
             const deviceValue = {
                 deviceId: deviceId,
                 values: valueToBeAdded

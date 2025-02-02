@@ -8,10 +8,10 @@
     import api from "./api";
   import { Subheader } from "@smui/list";
 
-    let { deviceId, key, queueLength = $bindable() } = $props();
+    let { deviceId, key, queueLength = $bindable(), isDevelopment =false } = $props();
     let entryValue = $state(null);
     let entryKey = $state(null);
-    let readOnly = $derived(key ? true : false);
+    let readOnly = $derived(key ? true : (!isDevelopment ? true : false));
 
     let existingKeys = $state([]);
 
@@ -42,16 +42,18 @@
     });
 </script>
 
-<Subheader>Neuer Eintrag</Subheader>
+<Subheader>2. Neuen Wert eingeben</Subheader>
 <Card class="mx-2 p-2">
     <Content>
         <div class="flex flex-col">
-            <Textfield label="Name des Attributs" bind:value={entryKey} disabled={readOnly}>
-                {#snippet helper()}
-                    <HelperText persistent>Name des Attributes ohne Leerzeichen</HelperText>
-                {/snippet}
-            </Textfield>
-            <div class="h-4"></div>
+            {#if isDevelopment}
+                <Textfield label="Name des Attributs" bind:value={entryKey} disabled={readOnly}>
+                    {#snippet helper()}
+                        <HelperText persistent>Name des Attributes ohne Leerzeichen</HelperText>
+                    {/snippet}
+                </Textfield>
+                <div class="h-4"></div>
+            {/if}
             <Textfield label="Wert" bind:value={entryValue}>
                 {#snippet helper()}
                     <HelperText persistent>Wert in Zahlen</HelperText>
