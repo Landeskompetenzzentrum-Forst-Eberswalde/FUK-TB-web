@@ -11,7 +11,6 @@ import api from "./api";
 
         try{
             const res = await api.getKeys(deviceId, startTs, endTs);
-            console.log(res);
             return res;
         } catch (e) {
             console.error(e);

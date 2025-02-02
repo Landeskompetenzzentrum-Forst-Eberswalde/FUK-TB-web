@@ -33,7 +33,6 @@
     async function _getDevices(){
         try{
             const res = await api.getDevices();
-            console.log(res);
             let newFilters = [];
 
             //add filters from devices labels

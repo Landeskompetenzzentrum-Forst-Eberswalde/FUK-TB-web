@@ -32,7 +32,6 @@
         try{
             const res = await api.getDeviceByName(deviceName);
             //const res = await api.getDevice(deviceId);
-            console.log(res);
             device = res;
             
             return res;

@@ -7,7 +7,7 @@
 	import { pwaInfo } from 'virtual:pwa-info';
 
 	let { children } = $props();
-
+	
 	onMount(() => {
 		const credentials = localStorage.getItem("credentials");
 		try{
@@ -41,15 +41,6 @@
 				}
 			})
 		}
-
-		currentSession.session = await db.authChange((event, session) => {
-			currentSession.session = session;
-			if (session) {
-				AuthenticationStore.user = session.user;
-			} else {
-				AuthenticationStore.user = null;
-			}
-		});
 	});
 
 	$effect(() => {
