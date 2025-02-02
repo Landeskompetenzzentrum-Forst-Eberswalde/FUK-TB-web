@@ -12,7 +12,10 @@
     import api from '$lib/api';
     import { goto } from '$app/navigation';
     import Snackbar, { Label as SnackbarLabel } from '@smui/snackbar';
-  import { base } from '$app/paths';
+    import { base } from '$app/paths';
+        
+    import logo from '$lib/assets/favicon.png';
+    
 
     let email = $state(null);
     let password = $state(null);
@@ -43,6 +46,9 @@
 
 <div class="h-screen flex items-center justify-center">
     <Content class="flex flex-col">
+        <div class="flex justify-center mb-4 rounded-full max-w-24 mx-auto overflow-hidden">
+            <img src={logo} alt="Logo" style="height: 100%; width: 100%;" />
+        </div>
         <Textfield variant="standard" bind:value={email} class="mb-4" input$autocomplete="email" type="email" label="E-Mail"></Textfield>
         <Textfield bind:value={password} type="password" class="mb-4" label="Passwort"></Textfield>
         <Button onclick={_login} variant="raised" color="primary" disabled={loading}>

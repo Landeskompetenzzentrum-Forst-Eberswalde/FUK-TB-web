@@ -14,6 +14,7 @@
     import { dev } from "$app/environment";
     import { onMount } from "svelte";
     import Badge from '@smui-extra/badge';
+    import logo from '$lib/assets/favicon.png';
   
   
     let topAppBar = $state(null);
