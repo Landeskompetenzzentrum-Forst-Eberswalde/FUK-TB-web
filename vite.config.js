@@ -11,8 +11,10 @@ export default defineConfig({
 				"theme_color": "#000000",
 				"background_color": "#000000",
 				"display": "standalone",
-				"scope": "/",
-				"start_url": "/",
+				"short_name": "FUK",
+				"description": "Manuelle Datenaufnahme forstlicher Umweltkontrollen",
+				"scope": "/FUK-TB-web/",
+				"start_url": "/FUK-TB-web/",
 				"screenshots": [
 					{
 						"src": "Screenshot_20250119-155051.jpg",
