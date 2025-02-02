@@ -47,12 +47,11 @@
         goto(`${base}/login`);
     }
     function _syncQueue() {
-        console.log('local sync off');
-        /*syncing = true;
+        syncing = true;
         api.syncLocalQueue().finally(() => {
             syncing = false;
             localQueueLength = api.getLocalQueue().length;
-        });*/
+        });
     }
 
     onMount(() => {
