@@ -1,4 +1,4 @@
-const host = 'https://thingsboard.gruenecho.de/api/';
+const host = 'https://thingsboard.forstliche-umweltkontrolle.de/api/';
 
 
 /**
@@ -313,7 +313,6 @@ class API{
         return JSON.parse(localStorage.getItem('localQueue'));
     }
     async sendLocalQueue(deviceId, values){
-        // curl -v -X POST http://thingsboard.gruenecho.de:8080/api/v1/sP8MLOoRaqVkrN3d0a65/telemetry --header Content-Type:application/json --data "{temperature:25}"
         return new Promise((resolve, reject) => {
             if(!deviceId || !values){
                 reject('Missing parameters');
